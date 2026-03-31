@@ -1,0 +1,8 @@
+<!--Cell-->
+<input
+    type="number"
+    min="0"
+    max="9"
+    name="{{ `${rowIndex}-${cellIndex}-${cellValue}` }}"
+    value="{{ cellValue > 0 ? cellValue : '' }}" [disabled]="cellValue > 0"
+/>

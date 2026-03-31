@@ -1,0 +1,4 @@
+<!--Row-->
+@for (cell of boardRowCells; track $index) {
+  <app-board-cell [cellValue]="cell" [cellIndex]="$index" [rowIndex]="rowIndex"></app-board-cell>
+}
