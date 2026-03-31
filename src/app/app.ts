@@ -3,7 +3,7 @@ import { form, FormField, required } from "@angular/forms/signals";
 import { boardOptions, Boards } from "./enums/boards";
 import { RouterOutlet } from '@angular/router';
 import { BoardService } from "./board-service";
-import { FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BoardRow } from "./board-row/board-row";
 
 @Component({
