@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { endpoints } from "./enums/endpoints";
-import { Boards, SolvedBoard, BoardDifficulty } from "./enums/boards";
+import { Boards, SolvedBoard } from "./enums/boards";
 
 @Injectable({
   providedIn: "root",
@@ -9,7 +9,7 @@ import { Boards, SolvedBoard, BoardDifficulty } from "./enums/boards";
 export class BoardService {
   private http: HttpClient = inject(HttpClient);
 
-  public getBoard(difficulty: BoardDifficulty) {
+  public getBoard(difficulty: string) {
     const params = new HttpParams().set("difficulty", difficulty);
     return this.http.get<Boards>(endpoints.getBoard, { params });
   }

@@ -1,6 +1,8 @@
 export type SudokuGrid = number[][];
 
-export type BoardDifficulty = 'easy' | 'medium' | 'hard';
+export type BoardDifficulty = 'easy' | 'medium' | 'hard' | 'random';
+
+export const boardOptions = new Set<BoardDifficulty>(['easy', 'medium', 'hard', 'random']);
 
 export type BoardStatus = 'solved' | 'unsolved';
 
@@ -14,4 +16,3 @@ export interface SolvedBoard {
   status: BoardStatus;
 }
 
-export default Boards;
