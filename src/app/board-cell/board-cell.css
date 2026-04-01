@@ -3,3 +3,9 @@ input {
     padding: 20px 20px;
     text-align: center;
 }
+
+@media(max-width: 500px) {
+    input {
+        padding: 12px 14px;
+    }
+}
