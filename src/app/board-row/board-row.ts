@@ -1,5 +1,6 @@
-import { Component, Input } from "@angular/core";
+import {Component, inject, Input} from "@angular/core";
 import { BoardCell } from "../board-cell/board-cell";
+import { AppStore } from "../app-store";
 
 @Component({
   selector: "app-board-row",
@@ -11,6 +12,8 @@ import { BoardCell } from "../board-cell/board-cell";
   standalone: true,
 })
 export class BoardRow {
-  @Input() boardRowCells?: number[];
-  @Input() rowIndex?: number;
+  @Input() boardRowCells!: number[];
+  @Input() rowIndex!: number;
+
+  readonly store = inject(AppStore);
 }

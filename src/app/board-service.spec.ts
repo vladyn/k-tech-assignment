@@ -1,6 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 import { BoardService } from "./board-service";
 import { Boards } from "./enums/boards";
+import { HttpParams } from "@angular/common/http";
 import { provideHttpClientTesting, HttpTestingController } from "@angular/common/http/testing";
 import { provideHttpClient } from "@angular/common/http";
 
@@ -155,9 +156,11 @@ describe("BoardService", () => {
     });
 
     const req = httpTestingController.expectOne('https://sugoku.onrender.com/solve');
+    const encodedBoard = new HttpParams({ fromObject: { board: JSON.stringify(board.board) } }).toString();
 
     expect(req.request.headers.get('Content-Type')).toBe('application/x-www-form-urlencoded');
     expect(req.request.method).toBe('POST');
+    expect(req.request.body).toBe(encodedBoard);
     req.flush({ name: 'John Rambo' });
   });
 
@@ -170,10 +173,26 @@ describe("BoardService", () => {
     });
 
     const req = httpTestingController.expectOne('https://sugoku.onrender.com/grade');
+    const encodedBoard = new HttpParams({ fromObject: { board: JSON.stringify(board.board) } }).toString();
     expect(req.request.method).toBe('POST');
     expect(req.request.headers.get('Content-Type')).toBe('application/x-www-form-urlencoded');
+    expect(req.request.body).toBe(encodedBoard);
     req.flush({
       "difficulty": "hard"
     });
-  })
+  });
+
+  it("should call validateBoard", () => {
+    service.validateBoard(board).subscribe(response => {
+      expect(response).toEqual({ status: 'solved' });
+    });
+
+    const req = httpTestingController.expectOne('https://sugoku.onrender.com/validate');
+    const encodedBoard = new HttpParams({ fromObject: { board: JSON.stringify(board.board) } }).toString();
+
+    expect(req.request.method).toBe('POST');
+    expect(req.request.headers.get('Content-Type')).toBe('application/x-www-form-urlencoded');
+    expect(req.request.body).toBe(encodedBoard);
+    req.flush({ status: 'solved' });
+  });
 });
