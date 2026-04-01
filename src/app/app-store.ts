@@ -5,7 +5,7 @@ import {
     withMethods,
     withState
 } from '@ngrx/signals';
-import { Boards, GameStatus } from "./enums/boards";
+import {Boards, GameStatus} from "./enums/boards";
 
 type AppStore = {
     board: Boards;
@@ -13,6 +13,7 @@ type AppStore = {
     gameStatus: GameStatus;
     initialBoard: Boards;
     error: Error;
+    boardStatus: string;
 };
 
 const initialState: AppStore = {
@@ -21,6 +22,7 @@ const initialState: AppStore = {
     gameStatus: 'pending',
     initialBoard: { board: [[]] },
     error: new Error(),
+    boardStatus: 'unsolved',
 };
 
 export const AppStore = signalStore(
@@ -81,6 +83,12 @@ export const AppStore = signalStore(
             patchState(store, (state) => ({
                 ...state,
                 error,
+            }))
+        },
+        setBoardStatus(status: string): void {
+            patchState(store, (state) => ({
+                ...state,
+                boardStatus: status,
             }))
         }
     }))

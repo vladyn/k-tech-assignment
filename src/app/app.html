@@ -105,7 +105,6 @@
 <main class="main">
   <div class="content">
     <div class="left-side">
-        <h1>Hello, {{ title() }}</h1>
         <form (ngSubmit)="onSubmit()">
             <select [formField]="getBoardForm.difficulty">
                 <option value="" selected>Select a board difficulty</option>
@@ -119,21 +118,27 @@
             <button type="button" (click)="solveBoard()">Solve Board</button>
             <button type="button" (click)="clearBoard()">Clear Board</button>
         </form>
-        <p>Selected difficulty: <strong>{{getBoardForm.difficulty().value()}}</strong></p>
+        <div class="pill-group">
+            <p><small>Game status:</small> <strong>{{store.gameStatus()}}</strong></p>
+            <p><small>Selected difficulty:</small> <strong>{{getBoardForm.difficulty().value()}}</strong></p>
+            <p><small>Board status:</small> <strong>{{store.boardStatus()}}</strong></p>
+        </div>
+        <div class="board">
         @for (row of store.board.board(); track $index) {
             <app-board-row [boardRowCells]="row" [rowIndex]="$index" />
         }
+        </div>
         @if (store.isLoading()) {
             <p>Loading...</p>
         } @else if (store.error().message) {
             <p>Error: {{ store.error().message }}</p>
-        } @else if (store.gameStatus() === 'finished') {
+        } @else if (store.boardStatus() === 'solved') {
             Congratulations! You've solved the board!
         } @else if (store.gameStatus() === 'playing') {
             You're on the right track! Keep going to solve the board.
         }
         @else {
-            Welcome to the Sudoku Game! Please select a difficulty and click "Get Board" to start playing. You can fill in the cells with numbers from 1 to 9. Use the "Validate Board" button to check if your current entries are valid, and the "Grade Board" button to see how close you are to solving the puzzle. If you get stuck, the "Solve Board" button will provide you with the solution. You can also clear the board at any time using the "Clear Board" button. Enjoy playing and good luck!
+            <p>Welcome to the Sudoku Game! Please select a difficulty and click "Get Board" to start playing. You can fill in the cells with numbers from 1 to 9. Use the "Validate Board" button to check if your current entries are valid, and the "Grade Board" button to see how close you are to solving the puzzle. If you get stuck, the "Solve Board" button will provide you with the solution. You can also clear the board at any time using the "Clear Board" button. Enjoy playing and good luck!</p>
         }
     </div>
   </div>

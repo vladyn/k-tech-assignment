@@ -1,0 +1,11 @@
+.pill-group {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    > p {
+        margin: 0;
+        padding: 0.25rem 0.5rem;
+    }
+}

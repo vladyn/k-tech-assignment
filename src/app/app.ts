@@ -15,7 +15,6 @@ import { AppStore } from "./app-store";
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('k-tech-assesment');
   boardOption = signal({ difficulty: '' });
   private boardService = inject(BoardService);
   readonly store = inject(AppStore);
@@ -30,6 +29,7 @@ export class App {
     this.boardService.getBoard(this.getBoardForm.difficulty().value()).subscribe({
       next: (response) => {
         this.store.setGameStatus('initial');
+        this.store.setBoardStatus('unsolved');
         this.store.setInitial(response);
         this.store.updateBoard(response);
       },
@@ -66,7 +66,7 @@ export class App {
     this.boardService.validateBoard(this.store.board()).subscribe({
       next: (response) => {
         this.store.setGameStatus('finished');
-
+        this.store.setBoardStatus(response.status);
       },
       error: (error) => {
         this.store.setGameStatus('pending');
@@ -84,6 +84,7 @@ export class App {
     this.boardService.solveBoard(this.store.board()).subscribe({
       next: (response) => {
         this.store.setGameStatus('finished');
+        this.store.setBoardStatus(response.status);
         this.store.updateBoard({ board: response.solution });
       },
       error: (error) => {
