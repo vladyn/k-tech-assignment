@@ -5,7 +5,7 @@ import {
     withMethods,
     withState
 } from '@ngrx/signals';
-import { Boards, BoardStatus, GameStatus } from "./enums/boards";
+import { Boards, GameStatus } from "./enums/boards";
 
 type AppStore = {
     board: Boards;

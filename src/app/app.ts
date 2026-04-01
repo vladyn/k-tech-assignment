@@ -1,6 +1,6 @@
 import { Component, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { form, FormField, required } from "@angular/forms/signals";
-import { boardOptions, Boards } from "./enums/boards";
+import { boardOptions } from "./enums/boards";
 import { RouterOutlet } from '@angular/router';
 import { BoardService } from "./board-service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -35,6 +35,7 @@ export class App {
       },
       error: (error) => {
         this.store.setGameStatus('pending');
+        this.store.setError(error);
         console.error('Error fetching board:', error);
       },
       complete: () => {
@@ -51,6 +52,7 @@ export class App {
         console.log('Grade board:', response);
       },
       error: (error) => {
+        this.store.setError(error);
         console.error('Grade board:', error);
       },
       complete: () => {
@@ -68,6 +70,7 @@ export class App {
       },
       error: (error) => {
         this.store.setGameStatus('pending');
+        this.store.setError(error);
         console.error('Error fetching board:', error);
       },
       complete: () => {
@@ -85,6 +88,7 @@ export class App {
       },
       error: (error) => {
         this.store.setGameStatus('pending');
+        this.store.setError(error);
         console.error('Error fetching board:', error);
       },
       complete: () => {
