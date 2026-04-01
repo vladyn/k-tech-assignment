@@ -1,0 +1,10 @@
+<!--Row-->
+@for (cell of boardRowCells; track $index) {
+  <app-board-cell
+        [cellValue]="cell"
+        [cellIndex]="$index"
+        [rowIndex]="rowIndex"
+        [disabled]="store.initialBoard().board[rowIndex][$index] !== 0 && store.gameStatus() === 'playing' || store.gameStatus() !== 'playing'"
+  >
+  </app-board-cell>
+}
