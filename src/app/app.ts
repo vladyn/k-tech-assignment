@@ -21,10 +21,14 @@ export class App {
 
   options = boardOptions;
   getBoardForm = form(this.boardOption, fieldPath => {
-    required(fieldPath, { message: 'Board option is required' });
+    required(fieldPath.difficulty, { message: 'Difficulty is required' });
   });
 
   onSubmit() {
+    if (this.getBoardForm.difficulty().invalid()) {
+      return;
+    }
+
     this.store.setLoading(true);
     this.boardService.getBoard(this.getBoardForm.difficulty().value()).subscribe({
       next: (response) => {
