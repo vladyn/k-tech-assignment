@@ -112,7 +112,14 @@
                     <option [value]="option">{{ option }}</option>
                 }
             </select>
-            <button type="submit">Get Board</button>
+            @if (getBoardForm.difficulty().invalid()) {
+                <ul>
+                    @for (error of getBoardForm.difficulty().errors(); track error) {
+                        <li>{{ error.message }}</li>
+                    }
+                </ul>
+            }
+            <button type="submit" [disabled]="getBoardForm.difficulty().invalid()">Get Board</button>
             <button type="button" (click)="validateBoard()">Validate Board</button>
             <button type="button" (click)="gradeBoard()">Grade Board</button>
             <button type="button" (click)="solveBoard()">Solve Board</button>
