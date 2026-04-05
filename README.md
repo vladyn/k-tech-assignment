@@ -1,59 +1,86 @@
-# KTechAssesment
+# KTechAssesment - Sudoku Game
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+This repository contains a standalone Angular 21 Sudoku app that integrates with the Sugoku API.
 
-## Development server
+## What the app does
 
-To start a local development server, run:
+- Lets the user pick a difficulty (`easy`, `medium`, `hard`, `random`) and fetch a board.
+- Renders a 9x9-like grid through reusable row and cell components.
+- Supports game actions from the UI:
+  - `Get Board`
+  - `Validate Board`
+  - `Grade Board`
+  - `Solve Board`
+  - `Clear Board`
+- Tracks and displays game metadata (`gameStatus`, selected difficulty, and `boardStatus`).
 
-```bash
-ng serve
-```
+## Architecture at a glance
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Bootstrap: `src/main.ts` -> `bootstrapApplication(App, appConfig)`.
+- Root component: `src/app/app.ts` + template `src/app/app.html`.
+- State management: `src/app/app-store.ts` using `@ngrx/signals` (`signalStore`, `patchState`).
+- API integration: `src/app/board-service.ts`.
+- Endpoint map and base URL: `src/app/enums/endpoints.ts` (`sudokuTier = https://sugoku.onrender.com`).
+- Rendering hierarchy:
+  - `App`
+  - `BoardRow` (`src/app/board-row/board-row.ts`)
+  - `BoardCell` (`src/app/board-cell/board-cell.ts`)
 
-## Code scaffolding
+## API behavior
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+First, fire up the back-end server: https://sugoku.onrender.com/
+Hosted on free tier, so it may take a moment to wake up if idle.
+The app calls SuGOku endpoints:
 
-```bash
-ng generate component component-name
-```
+- `GET /board?difficulty=...` to fetch a puzzle
+- `POST /validate`
+- `POST /grade`
+- `POST /solve`
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+POST requests are sent as `application/x-www-form-urlencoded` with board payload encoding handled in `BoardService.encodeBoard`.
 
-```bash
-ng generate --help
-```
+## Local development
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Install dependencies:
 
 ```bash
-ng e2e
+npm install
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Run the dev server (Angular CLI default `http://localhost:4200`):
 
-## Additional Resources
+```bash
+npm start
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Build production output:
+
+```bash
+npm run build
+```
+
+Build in watch mode with development configuration:
+
+```bash
+npm run watch
+```
+
+Run unit tests (Angular unit-test builder + Vitest globals):
+
+```bash
+npm test
+```
+
+## Notes and current limitations
+
+- Router is configured but has no routes yet (`src/app/app.routes.ts`).
+- `BoardService` uses `HttpClient`; ensure `provideHttpClient()` is added in `src/app/app.config.ts` for runtime API calls.
+- `Clear Board` restores the original fetched puzzle state, not an empty grid.
+
+## Useful files
+
+- `src/app/app.ts` - UI actions and game flow
+- `src/app/app.html` - form controls, status text, board container (`div#board`)
+- `src/app/app-store.ts` - central game state and update methods
+- `src/app/board-service.ts` - Sugoku HTTP calls and board encoding
+- `src/app/enums/boards.ts` - core game types (`BoardDifficulty`, `BoardStatus`, `GameStatus`)
