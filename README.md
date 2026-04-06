@@ -1,4 +1,4 @@
-# KTechAssesment - Sudoku Game
+# Sudoku Game
 
 This repository contains a standalone Angular 21 Sudoku app that integrates with the Sugoku API.
 
@@ -25,6 +25,8 @@ This repository contains a standalone Angular 21 Sudoku app that integrates with
   - `App`
   - `BoardRow` (`src/app/board-row/board-row.ts`)
   - `BoardCell` (`src/app/board-cell/board-cell.ts`)
+
+## Deployed on Netlify: https://k-tech-assignment-6aeya4v0h-vladyns-projects.vercel.app/
 
 ## API behavior
 
